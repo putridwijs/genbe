@@ -1,4 +1,4 @@
-package com.putri.com.putri.genbe;
+package com.putri.genbe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
