@@ -3,7 +3,7 @@ package com.putri.genbe.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.putri.genbe.dto.PendidikanDto;
+//import com.putri.genbe.dto.PendidikanDto;
 import com.putri.genbe.entity.Pendidikan;
 import com.putri.genbe.repository.PendidikanRepository;
 import com.putri.genbe.repository.PersonRepository;
