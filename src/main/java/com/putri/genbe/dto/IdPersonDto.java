@@ -1,6 +1,6 @@
 package com.putri.genbe.dto;
 
-public class PendidikanDto1 {
+public class IdPersonDto {
 	private Integer idPerson;
 
 	public Integer getIdPerson() {

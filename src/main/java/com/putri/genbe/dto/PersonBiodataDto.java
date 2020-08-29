@@ -2,7 +2,7 @@ package com.putri.genbe.dto;
 
 import java.util.Date;
 
-public class PersonDto {
+public class PersonBiodataDto {
 	private String nik;
 	private String name;
 	private String address;
