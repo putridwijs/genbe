@@ -19,7 +19,6 @@ import com.putri.genbe.dto.PersonBiodataDto;
 import com.putri.genbe.dto.Response;
 import com.putri.genbe.dto.ResponseLengkap;
 import com.putri.genbe.entity.Person;
-import com.putri.genbe.repository.BiodataRepository;
 import com.putri.genbe.repository.PendidikanRepository;
 import com.putri.genbe.repository.PersonRepository;
 import com.putri.genbe.service.PersonBiodataService;
@@ -33,9 +32,6 @@ public class ApiPersonBiodata {
 
 	@Autowired
 	private PersonRepository personRepository;
-
-	@Autowired
-	private BiodataRepository biodataRepository;
 
 	@Autowired
 	private PendidikanRepository pendidikanRepository;
@@ -67,42 +63,21 @@ public class ApiPersonBiodata {
 				Person person = personRepository.findByNikLike(nik).get(0);
 				PersonBioPendidikanDto dto = convertToDTo(person);
 				lengkap.setStatus("true");
-				lengkap.setMessage("berhasil");
+				lengkap.setMessage("success");
 				lengkap.setData(dto);
 				object.add(lengkap);
 			} else {
-				lengkap.setStatus("false");
-				lengkap.setMessage("gagal");
+				respon.setStatus("false");
+				respon.setMessage("data gagal masuk, nik " + nik + " tidak ditemukan");
 				object.add(respon);
 			}
 		} else {
-			lengkap.setStatus("false");
-			lengkap.setMessage("gagal");
+			respon.setStatus("false");
+			respon.setMessage("data gagal masuk, jumlah digit nik tidak sama dengan 16");
 			object.add(respon);
 		}
 		return object;
 	}
-
-//	@GetMapping("/{nik}")
-//	public PersonBioPendidikanDto dataPerson(@PathVariable String nik) {
-//		Person person = personRepository.findByNik(nik);
-//		Biodata biodata = (Biodata) biodataRepository.findAllByPerson(person);
-//		Pendidikan pendidikan = pendidikanRepository.findAllByPerson(person);
-//		PersonBioPendidikanDto dto = new PersonBioPendidikanDto();
-//		Response status1 = status(true, "succes");
-//		dto.setStatus(status1);
-//		dto.setNik(biodata.getPerson().getNik());
-//		dto.setName(biodata.getPerson().getName());
-//		dto.setAddress(biodata.getPerson().getAddress());
-//		dto.setHp(biodata.getHp());
-//		dto.setTgl(biodata.getTgl());
-//		dto.setTempatLahir(biodata.getTempatLahir());
-////		Integer umur = calculateAge(biodata);
-////		dto.setUmur(umur);
-//		String pendidikan_terakhir = pendidikan.getLulus();
-//		dto.setPendidikan_terakhir(pendidikan_terakhir);
-//		return dto;
-//	}
 
 	private Response status(Boolean status, String message) {
 		Response response = new Response();
@@ -136,7 +111,5 @@ public class ApiPersonBiodata {
 		dto.setPendidikan_terakhir(pendidikanRepository.cariJenjangPendidikan(person.getIdPerson()));
 		return dto;
 	}
-
-//	private 
 
 }

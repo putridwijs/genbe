@@ -3,7 +3,6 @@ package com.putri.genbe.dto;
 import java.sql.Date;
 
 public class PersonBioPendidikanDto {
-//	private Response status;
 	private String nik;
 	private String name;
 	private String address;
@@ -12,14 +11,6 @@ public class PersonBioPendidikanDto {
 	private String tempatLahir;
 	private String umur;
 	private String pendidikan_terakhir;
-
-//	public Response getStatus() {
-//		return status;
-//	}
-//
-//	public void setStatus(Response status1) {
-//		this.status = status1;
-//	}
 
 	public String getNik() {
 		return nik;
