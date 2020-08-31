@@ -10,7 +10,7 @@ import com.putri.genbe.entity.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
-	Person findByNik(String nik);
+	List<Person> findByNikLike(String nik);
 //	@Query(value = "SELECT * FROM t_person p INNER JOIN t_biodata b ON p.id_person=b.idperson where p.nik = ?1")
 //	List<Person> findByNik(String nik);
 }

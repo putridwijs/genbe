@@ -1,13 +1,14 @@
 package com.putri.genbe.controller;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.putri.genbe.dto.PendidikanDto;
 import com.putri.genbe.dto.Response;
@@ -26,17 +27,27 @@ public class ApiPendidikan {
 
 	@Autowired
 	private PendidikanService pendidikanService;
-	
-	@PostMapping("/{idPerson}")
-	public Response insert(@PathVariable Integer idPerson,  @RequestBody PendidikanWrapper pendidikanWrapper) {
-		if (personRepository.findById(idPerson).isPresent()) {
-			for (PendidikanDto pendidikan : pendidikanWrapper.getPendidikan()) {
-				Pendidikan entity = convertToEntity(pendidikan, idPerson);
-				pendidikanService.savePendidikan(entity);
-			}
-				return status(true, "data berhasil masuk");
-			}
-		return status(false, "data gagal masuk");
+
+//	@PostMapping("/{idPerson}")
+//	public Response insert(@PathVariable Integer idPerson,  @RequestBody PendidikanWrapper pendidikanWrapper) {
+//		if (personRepository.findById(idPerson).isPresent()) {
+//			for (PendidikanDto pendidikan1 : pendidikanWrapper.getPendidikan()) {
+//				Pendidikan entity = convertToEntity(pendidikan1, idPerson);
+//				pendidikanService.savePendidikan(entity);
+//			}
+//				return status(true, "data berhasil masuk");
+//			}
+//		return status(false, "data gagal masuk");
+//	}
+
+	@PostMapping
+	public Response insert(@RequestBody List<PendidikanDto> pendidikanDto, @RequestParam Integer idPerson) {
+		try {
+			pendidikanService.savePendidikan(pendidikanDto, idPerson);
+			return status(true, "data berhasil masuk");
+		} catch (Exception e) {
+			return status(false, "data gagal masuk");
+		}
 	}
 
 	private Response status(Boolean status, String message) {
@@ -50,20 +61,5 @@ public class ApiPendidikan {
 		}
 		return response;
 	}
-
-	private Pendidikan convertToEntity(PendidikanDto dto, Integer idPerson) {
-		Pendidikan pendidikan = new Pendidikan();
-		pendidikan.setJenjang(dto.getJenjang());
-		pendidikan.setInstitusi(dto.getInstitusi());
-		pendidikan.setMasuk(dto.getMasuk());
-		pendidikan.setLulus(dto.getLulus());
-
-		if (personRepository.findById(idPerson).isPresent()) {
-			Person person = personRepository.findById(idPerson).get();
-			pendidikan.setPerson(person);
-		}
-		return pendidikan;
-	}
-
 
 }
