@@ -3,23 +3,23 @@ package com.putri.genbe.dto;
 import java.sql.Date;
 
 public class PersonBioPendidikanDto {
-	private Response status;
+//	private Response status;
 	private String nik;
 	private String name;
 	private String address;
 	private String hp;
 	private Date tgl;
 	private String tempatLahir;
-	private Integer umur;
+	private String umur;
 	private String pendidikan_terakhir;
 
-	public Response getStatus() {
-		return status;
-	}
-
-	public void setStatus(Response status1) {
-		this.status = status1;
-	}
+//	public Response getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(Response status1) {
+//		this.status = status1;
+//	}
 
 	public String getNik() {
 		return nik;
@@ -69,11 +69,11 @@ public class PersonBioPendidikanDto {
 		this.tempatLahir = tempatLahir;
 	}
 
-	public Integer getUmur() {
+	public String getUmur() {
 		return umur;
 	}
 
-	public void setUmur(Integer umur) {
+	public void setUmur(String umur) {
 		this.umur = umur;
 	}
 

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +22,9 @@ public class Person {
 	private String name;
 	@Column(name = "alamat")
 	private String address;
+
+	@OneToOne(mappedBy = "person")
+	private Biodata biodata;
 
 	public Integer getIdPerson() {
 		return idPerson;
@@ -53,6 +56,14 @@ public class Person {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Biodata getBiodata() {
+		return biodata;
+	}
+
+	public void setBiodata(Biodata biodata) {
+		this.biodata = biodata;
 	}
 
 }

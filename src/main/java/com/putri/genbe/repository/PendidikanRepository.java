@@ -11,6 +11,8 @@ import com.putri.genbe.entity.Person;
 public interface PendidikanRepository extends JpaRepository<Pendidikan, Integer> {
 	Pendidikan findAllByPerson(Person person);
 	
+	@Query(value = "SELECT jenjang FROM public.t_pendidikan where idperson =?1 order by tahunlulus desc limit 1", nativeQuery = true)
+	String cariJenjangPendidikan (Integer idPerson);
 //	@Query(value = "SELECT jenjang FROM t_pendidikan p where p.tahunlulus = ")
 //	Pendidikan findByJenjang (String idPerson);
 }
