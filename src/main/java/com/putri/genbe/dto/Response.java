@@ -1,16 +1,9 @@
 package com.putri.genbe.dto;
 
 public class Response {
-	private String message;
+
 	private String status;
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
+	private String message;
 
 	public String getStatus() {
 		return status;
@@ -18,6 +11,14 @@ public class Response {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }
