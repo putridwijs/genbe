@@ -21,9 +21,9 @@ public class Pendidikan {
 	@Column(name = "institusi", length = 50, nullable = false)
 	private String institusi;
 	@Column(name = "tahunmasuk", length = 10, nullable = false)
-	private String masuk;
+	private String tahunMasuk;
 	@Column(name = "tahunlulus", length = 10, nullable = false)
-	private String lulus;
+	private String tahunLulus;
 
 	@ManyToOne
 	@JoinColumn(name = "idperson", nullable = false)
@@ -53,20 +53,20 @@ public class Pendidikan {
 		this.institusi = institusi;
 	}
 
-	public String getMasuk() {
-		return masuk;
+	public String getTahunMasuk() {
+		return tahunMasuk;
 	}
 
-	public void setMasuk(String masuk) {
-		this.masuk = masuk;
+	public void setTahunMasuk(String tahunMasuk) {
+		this.tahunMasuk = tahunMasuk;
 	}
 
-	public String getLulus() {
-		return lulus;
+	public String getTahunLulus() {
+		return tahunLulus;
 	}
 
-	public void setLulus(String lulus) {
-		this.lulus = lulus;
+	public void setTahunLulus(String tahunLulus) {
+		this.tahunLulus = tahunLulus;
 	}
 
 	public Person getPerson() {

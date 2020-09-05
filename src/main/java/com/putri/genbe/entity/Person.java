@@ -19,9 +19,9 @@ public class Person {
 	@Column(name = "nik", unique = true, length = 16, nullable = false)
 	private String nik;
 	@Column(name = "nama", length = 50)
-	private String name;
+	private String nama;
 	@Column(name = "alamat")
-	private String address;
+	private String alamat;
 
 	@OneToOne(mappedBy = "person")
 	private Biodata biodata;
@@ -42,20 +42,20 @@ public class Person {
 		this.nik = nik;
 	}
 
-	public String getName() {
-		return name;
+	public String getNama() {
+		return nama;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAlamat() {
+		return alamat;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAlamat(String alamat) {
+		this.alamat = alamat;
 	}
 
 	public Biodata getBiodata() {

@@ -39,7 +39,7 @@ public class ApiPersonBiodata {
 	@PostMapping
 	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
 		Integer panjangNik = dto.getNik().length();
-		Integer umur = Integer.parseInt(calculateAge(dto.getTgl()));
+		Integer umur = Integer.parseInt(calculateAge(dto.getTanggalLahir()));
 		if (panjangNik != 16 && umur < 30) {
 			return status(false,
 					"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
@@ -102,13 +102,13 @@ public class ApiPersonBiodata {
 	private PersonBioPendidikanDto convertToDTo(Person person) {
 		PersonBioPendidikanDto dto = new PersonBioPendidikanDto();
 		dto.setNik(person.getNik());
-		dto.setName(person.getName());
-		dto.setAddress(person.getAddress());
-		dto.setHp(person.getBiodata().getHp());
-		dto.setTgl(person.getBiodata().getTgl());
+		dto.setNama(person.getNama());
+		dto.setAlamat(person.getAlamat());
+		dto.setNoHp(person.getBiodata().getNoHp());
+		dto.setTanggalLahir(person.getBiodata().getTanggalLahir());
 		dto.setTempatLahir(person.getBiodata().getTempatLahir());
-		dto.setUmur(calculateAge(person.getBiodata().getTgl()));
-		dto.setPendidikan_terakhir(pendidikanRepository.cariJenjangPendidikan(person.getIdPerson()));
+		dto.setUmur(calculateAge(person.getBiodata().getTanggalLahir()));
+		dto.setPendidikanTerakhir(pendidikanRepository.cariJenjangPendidikan(person.getIdPerson()));
 		return dto;
 	}
 

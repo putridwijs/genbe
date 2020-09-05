@@ -10,12 +10,21 @@ public class BaseMvcController {
 //  dashboard
 	@GetMapping("dashboard")
 	public String dashboard() {
-		return "dashboard/index";
+		return "dashboard/dataperson";
 	}
-
-	// dashboard
-	@GetMapping("biodata")
-	public String biodata() {
-		return "biodata/index";
+	
+	@GetMapping("person")
+	public String person() {
+		return "dashboard/dataperson";
+	}
+	
+	@GetMapping("pendidikan")
+	public String pendidikan() {
+		return "dashboard/datapendidikan";
+	}
+	
+	@GetMapping("person1")
+	public String get() {
+		return "person";
 	}
 }

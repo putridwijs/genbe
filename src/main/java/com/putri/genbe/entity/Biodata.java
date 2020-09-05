@@ -20,10 +20,10 @@ public class Biodata {
 	private Integer idBio;
 
 	@Column(name = "nohp", length = 16)
-	private String hp;
+	private String noHp;
 
 	@Column(name = "tanggal_lahir")
-	private Date tgl;
+	private Date tanggalLahir;
 
 	@Column(name = "tempat_lahir", length = 50)
 	private String tempatLahir;
@@ -40,20 +40,20 @@ public class Biodata {
 		this.idBio = idBio;
 	}
 
-	public String getHp() {
-		return hp;
+	public String getNoHp() {
+		return noHp;
 	}
 
-	public void setHp(String hp) {
-		this.hp = hp;
+	public void setNoHp(String noHp) {
+		this.noHp = noHp;
 	}
 
-	public Date getTgl() {
-		return tgl;
+	public Date getTanggalLahir() {
+		return tanggalLahir;
 	}
 
-	public void setTgl(Date tgl) {
-		this.tgl = tgl;
+	public void setTanggalLahir(Date tanggalLahir) {
+		this.tanggalLahir = tanggalLahir;
 	}
 
 	public String getTempatLahir() {
@@ -71,7 +71,5 @@ public class Biodata {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
-	
 
 }

@@ -37,8 +37,8 @@ public class PendidikanServiceImpl implements PendidikanService {
 		Pendidikan pendidikan = new Pendidikan();
 		pendidikan.setJenjang(dto.getJenjang());
 		pendidikan.setInstitusi(dto.getInstitusi());
-		pendidikan.setMasuk(dto.getMasuk());
-		pendidikan.setLulus(dto.getLulus());
+		pendidikan.setTahunMasuk(dto.getTahunMasuk());
+		pendidikan.setTahunLulus(dto.getTahunLulus());
 		return pendidikan;
 	}
 

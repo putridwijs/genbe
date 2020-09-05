@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class PersonBioPendidikanDto {
 	private String nik;
-	private String name;
-	private String address;
-	private String hp;
-	private Date tgl;
+	private String nama;
+	private String alamat;
+	private String noHp;
+	private Date tanggalLahir;
 	private String tempatLahir;
 	private String umur;
-	private String pendidikan_terakhir;
+	private String pendidikanTerakhir;
 
 	public String getNik() {
 		return nik;
@@ -20,36 +20,36 @@ public class PersonBioPendidikanDto {
 		this.nik = nik;
 	}
 
-	public String getName() {
-		return name;
+	public String getNama() {
+		return nama;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAlamat() {
+		return alamat;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAlamat(String alamat) {
+		this.alamat = alamat;
 	}
 
-	public String getHp() {
-		return hp;
+	public String getNoHp() {
+		return noHp;
 	}
 
-	public void setHp(String hp) {
-		this.hp = hp;
+	public void setNoHp(String noHp) {
+		this.noHp = noHp;
 	}
 
-	public Date getTgl() {
-		return tgl;
+	public Date getTanggalLahir() {
+		return tanggalLahir;
 	}
 
-	public void setTgl(Date tgl) {
-		this.tgl = tgl;
+	public void setTanggalLahir(Date tanggalLahir) {
+		this.tanggalLahir = tanggalLahir;
 	}
 
 	public String getTempatLahir() {
@@ -68,12 +68,12 @@ public class PersonBioPendidikanDto {
 		this.umur = umur;
 	}
 
-	public String getPendidikan_terakhir() {
-		return pendidikan_terakhir;
+	public String getPendidikanTerakhir() {
+		return pendidikanTerakhir;
 	}
 
-	public void setPendidikan_terakhir(String pendidikan_terakhir) {
-		this.pendidikan_terakhir = pendidikan_terakhir;
+	public void setPendidikanTerakhir(String pendidikanTerakhir) {
+		this.pendidikanTerakhir = pendidikanTerakhir;
 	}
 
 }
