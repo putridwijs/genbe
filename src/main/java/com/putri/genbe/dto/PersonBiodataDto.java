@@ -1,6 +1,6 @@
 package com.putri.genbe.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class PersonBiodataDto {
 	private String nik;

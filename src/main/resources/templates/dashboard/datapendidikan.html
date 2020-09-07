@@ -9,12 +9,12 @@
 	</div>
 	<!-- form start -->
 	<div class="card-body bg-navy">
-		<form role="form">
+		<form role="form" method="post" action=" ">
 			<div class="form-group">
-				<label for="idPendidikan">Id Pendidikan:</label> <input
-					type="number" class="form-control" id="idPendidikan"
-					name="id_pendidikan" placeholder="Masukan Id Pendidikan">
-			</div>
+				<label for="idPerson">Id Person:</label> <input
+					type="number" class="form-control" id="idPerson"
+					name="idperson" placeholder="Masukan Id Person">
+			</div>  
 			<fieldset id="jenjangpendidikan">
 				<div class="form-group">
 					<label for="jenjang">Jenjang:</label> <input type="text"
@@ -28,12 +28,12 @@
 				</div>
 				<div class="form-group">
 					<label for="tahunMasuk">Tahun Masuk:</label> <input type="text"
-						class="form-control" id="tahunMasuk" name="tahunMasuk"
+						class="form-control" id="tahunMasuk" name="tahunmasuk"
 						placeholder="Masukan tahun masuk">
 				</div>
 				<div class="form-group">
 					<label for="tahunLulus">Tahun Lulus:</label> <input type="text"
-						class="form-control" id="tahunLulus" name="tahunLulus"
+						class="form-control" id="tahunLulus" name="tahunlulus"
 						placeholder="Masukan tahun lulus">
 				</div>
 			</fieldset>
@@ -45,6 +45,7 @@
 		<button id="submitbutton" type="button"
 			class="btn btn-primary success">Submit</button>
 	</div>
+	<div class="col-sm-7" id="postResultDiv"></div>
 
 	<!-- jQuery -->
 	<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
@@ -52,86 +53,135 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
 	<!-- Sweet Alert -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
 	 $(document).ready(function(){
-		 var max_fields = 10;
-		 var wrapper = $("#jenjangpendidikan");
-		 var add_button = $("#add");
-		 var removeButton = $("#remove");
-		 
-		 var x = 1;
-		 $(add_button).click(function(e){
-			 e.preventDefault();
-			 if (x < max_fields){
-				 x++;
-				var newfield = $(wrapper).append('<fieldset id="jenjangpendidikan">' +
-						'<div class="form-group"><label for="jenjang">Jenjang:</label> <input type="text" class="form-control" id="jenjang" name="jenjang" placeholder="Masukan jenjang"></div>'
-						+ '<div class="form-group"><label for="institusi">Institusi:</label> <input type="text" class="form-control" id="institusi" name="institusi" placeholder="Masukan institusi"></div>'
-						+ '<div class="form-group"><label for="tahunMasuk">Tahun Masuk:</label> <input type="text" class="form-control" id="tahunMasuk" name="tahunMasuk" placeholder="Masukan tahun masuk"></div>'+
-						'<div class="form-group"><label for="tahunLulus">Tahun Lulus:</label> <input type="text" class="form-control" id="tahunLulus" name="tahunLulus" placeholder="Masukan tahun lulus"></div></fieldset>')
-			 }
+		 function ajaxPost(){
+			 //prepare form data
+			 var formData = {
+					idPerson : $("#idPerson").val(),
+				 	jenjang : $("#jenjang").val(),
+					institusi : $("#institusi").val(),
+					tahunMasuk : $("#tahunMasuk").val(),
+					tahunLulus : $("#tahunLulus").val()
+			 };
+			// formData = $.parseJSON(formData)
 			 
-		 });
+			 //do post
+			 $.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "pendidikan",
+				data: JSON.stringify(formData),
+				dataType: "json",
+				success: function(result){
+					if(result.status == "true"){
+						$("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" + 
+								"Data Berhasil Masuk!</p>");
+					} else{
+						$("#postResultDiv").html("<strong>Error</strong>");
+					}
+					console.log(result);
+				}
+			 });
+		 }; 
+			
+			
+		 
+		 $('.success').click(function(event) {
+				if($('#idPerson').val() == '' && $('#jenjang').val() == '' && $('#institusi').val() == '' && $('#tahunMasuk').val() == '' && $('#tahunLulus').val() == ''){
+					Swal.fire({
+						  icon: 'error',
+						  title: 'Oops...',
+						  text: 'Data tidak boleh kosong!'
+						})
+				}
+				else if($('#idPerson').val() == ''){
+					Swal.fire({
+						  icon: 'error',
+						  title: 'Oops...',
+						  text: 'Harap masukan Id Person'
+						})
+				   } else if($('#jenjang').val() == ''){
+					   Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Harap masukan jenjang pendidikan anda'
+							})
+				   } else if($('#institusi').val() == ''){
+					   Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Harap masukan institusi anda'
+							})
+				   } else if($('#tahunMasuk').val() == ''){
+					   Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Harap masukan tahun masuk jenjang pendidikan anda'
+							})
+				   } else if ($('#tahunLulus').val() == ''){
+					   Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Harap masukan tahun lulus jenjang pendidikan anda'
+							})
+				   } else{
+					   event.preventDefault();
+					   /* $.post('pendidikan', {
+						   	idPerson: $("#idPerson").val(),
+						 	jenjang : $("#jenjang").val(),
+							institusi : $("#institusi").val(),
+							tahunMasuk : $("#tahunMasuk").val(),
+							tahunLulus : $("#tahunLulus").val()
+					 }, 
+							    function(returnedData){
+							         console.log(returnedData);
+							}).fail(function(){
+							      console.log("error");
+							}); */
+					  /*  ajaxPost(); */
+					  $.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: "pendidikan",
+						data: JSON.stringify({idPerson : $("#idPerson").val(),
+							 	jenjang : $("#jenjang").val(),
+								institusi : $("#institusi").val(),
+								tahunMasuk : $("#tahunMasuk").val(),
+								tahunLulus : $("#tahunLulus").val()}),
+						dataType: "json",
+						success: function(result){
+							if(result.status == "true"){
+								$("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" + 
+									"Data Berhasil Masuk!</p>");
+							} else{
+								$("#postResultDiv").html("<strong>Error</strong>");
+							}
+						console.log(result);
+						}
+					 });
+						const Toast = Swal.mixin({
+							  toast: true,
+							  position: 'top-end',
+							  showConfirmButton: false,
+							  timer: 3000,
+							  timerProgressBar: true,
+							  onOpen: (toast) => {
+					    		toast.addEventListener('mouseenter', Swal.stopTimer)
+					    		toast.addEventListener('mouseleave', Swal.resumeTimer)
+					 		 }
+						})
+						Toast.fire({
+					  	icon: 'success',
+					  	title: 'Data berhasil masuk'
+					})
+				}
+			})
 	 })
 	</script>
-	<script type="text/javascript">
-		$('.success').click(function() {
-			if($('#idPendidikan').val() == '' && $('#jenjang').val() == '' && $('#institusi').val() == '' && $('#tahunMasuk').val() == '' && $('#tahunLulus').val() == ''){
-				Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Data tidak boleh kosong!'
-					})
-			}
-			else if($('#idPendidikan').val() == ''){
-				Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap masukan Id Pendidikan'
-					})
-			   } else if($('#jenjang').val() == ''){
-				   Swal.fire({
-						  icon: 'error',
-						  title: 'Oops...',
-						  text: 'Harap masukan jenjang pendidikan anda'
-						})
-			   } else if($('#institusi').val() == ''){
-				   Swal.fire({
-						  icon: 'error',
-						  title: 'Oops...',
-						  text: 'Harap masukan institusi anda'
-						})
-			   } else if($('#tahunMasuk').val() == ''){
-				   Swal.fire({
-						  icon: 'error',
-						  title: 'Oops...',
-						  text: 'Harap masukan tahun masuk jenjang pendidikan anda'
-						})
-			   } else if ($('#tahunLulus').val() == ''){
-				   Swal.fire({
-						  icon: 'error',
-						  title: 'Oops...',
-						  text: 'Harap masukan tahun lulus jenjang pendidikan anda'
-						})
-			   } else{
-					const Toast = Swal.mixin({
-						  toast: true,
-						  position: 'top-end',
-						  showConfirmButton: false,
-						  timer: 3000,
-						  timerProgressBar: true,
-						  onOpen: (toast) => {
-				    		toast.addEventListener('mouseenter', Swal.stopTimer)
-				    		toast.addEventListener('mouseleave', Swal.resumeTimer)
-				 		 }
-					})
-					Toast.fire({
-				  	icon: 'success',
-				  	title: 'Data berhasil masuk'
-				})
-			}
-		})
-	</script>
+	
 </div>
 </html>

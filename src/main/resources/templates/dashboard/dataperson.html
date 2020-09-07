@@ -1,182 +1,98 @@
 <!DOCTYPE html>
-<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+<html layout:decorate="~{base}" 
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:th="http://www.thymeleaf.org">
-
-<div class="card card-navy bg-navy" layout:fragment="content-body">
-	<div class="card-header bg-red">
-		<h3 class="card-title">Data Person</h3>
+	
+<div class="row mb-2" layout:fragment="content-header">
+	<div class="col-sm-6">
+		<h1 class="m-0 text-dark">Biodata</h1>
 	</div>
-	<!-- form start -->
-
-	<div class="card-body">
-		<form role="form">
-			<div class="form-group">
-				<label for="nik">NIK:</label> <input type="text"
-					class="form-control" id="nik" name="nik" placeholder="Masukan NIK">
-			</div>
-			<div class="form-group">
-				<label for="nama">Nama:</label> <input type="text"
-					class="form-control" id="nama" name="nama"
-					placeholder="Masukan nama">
-			</div>
-			<div class="form-group">
-				<label for="alamat">Alamat:</label> <input type="text"
-					class="form-control" id="alamat" name="alamat"
-					placeholder="Masukan alamat">
-			</div>
-			<div class="form-group">
-				<label for="noHp">No Hp:</label> <input type="text"
-					class="form-control" id="noHp" name="nohp"
-					placeholder="Masukan no hp">
-			</div>
-			<div class="form-group">
-				<label for="tanggalLahir">Tanggal Lahir:</label> <input type="date"
-					class="form-control" id="tanggalLahir" name="tanggal_lahir">
-			</div>
-			<div class="form-group">
-				<label for="tempatLahir">Tempat Lahir:</label> <input type="text"
-					class="form-control" id="tempatLahir" name="tempat_lahir"
-					placeholder="Masukan tempat lahir">
-			</div>
-		</form>
-	</div>
-
-	<div class="card-footer" align="right">
-		<button id="submitbutton" type="button"
-			class="btn btn-primary success">Submit</button>
-	</div>
-	<div class="col-sm-7" id="postResultDiv"></div>
-
-	<!-- jQuery -->
-	<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
-	<!-- Sweet Alert -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-	<script type="text/javascript">
-	$(document).ready(function(){
-		function ajaxPost(){
-			//prepare form data
-			var formData = {
-					nik: $("#nik").val(),
-					nama: $("#nama").val(),
-					alamat: $("#alamat").val(),
-					noHp: $("#noHp").val(),
-					tanggalLahir: $("#tanggalLahir").val(),
-					tempatLahir: $("#tempatLahir").val()
-			}
-			
-			//do post
-			$.ajax({
-				type: "POST",
-				contentType: "application/json",
-				url: window.location + "person",
-				data: JSON.stringify(formData),
-				dataType: 'json',
-				success: function(result){
-					if(result.status == "true"){
-						$("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" + 
-								"Data Berhasil Masuk!</p>");
-					} else{
-						$("#postResultDiv").html("<strong>Error</strong>");
-					}
-					console.log(result);
-				},
-				error : function(e) {
-					alert("Error!")
-					console.log("ERROR: ", e);
-				}
-			});
-		};
-		
-		$('.success').click(function(event) {
-			if($('#nik').val() == ''&& $('#nama').val() == '' && $('#alamat').val() == '' && $('#noHp').val() == '' && $('#tanggalLahir').val() == '' && $('#tempatLahir').val() == ''){
-				Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Data tidak boleh kosong!'
-				})
-			} else if($('#nik').val() == ''){
-				Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap masukan NIK anda'
-				})
-			} else if($('#nik').val().length != 16){
-				Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'panjang digit NIK tidak sama dengan 16'
-				})
-			} else if($('#nama').val() == ''){
-			   Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap masukan nama anda'
-				})
-			} else if($('#alamat').val() == ''){
-			   Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',	
-					  text: 'Harap masukan alamat anda'
-				})
-		   } else if($('#noHp').val() == ''){
-			   Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap masukan No HP anda'
-				})
-		   } else if ($('#tanggalLahir').val() == ''){
-			   Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap masukan tanggal lahir anda'
-				})
-		   } else if($('#tempatLahir').val() == ''){
-			   Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Harap pilih jenis kelamin anda'
-				})
-		   } else{
-			   var dob = $('#tanggalLahir').val();
-			   dob = new Date(dob);
-			   var today = new Date();
-			   var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-			   if(age < 30){
-				   Swal.fire({
-					   icon: 'error',
-					   title: 'Oops...',
-					   text: 'Usia anda kurang dari 30'
-					})
-				} else{
-					event.preventDefault();
-					ajaxPost();
-					const Toast = Swal.mixin({
-						  toast: true,
-						  position: 'top-end',
-						  showConfirmButton: false,
-						  timer: 3000,
-						  timerProgressBar: true,
-						  onOpen: (toast) => {
-				    		toast.addEventListener('mouseenter', Swal.stopTimer)
-				    		toast.addEventListener('mouseleave', Swal.resumeTimer)
-				 		 }
-					})
-					Toast.fire({
-				  		icon: 'success',
-				  		title: 'Data berhasil masuk'
-					})
-				}
-			}
-		});
-		
-	})
-	</script>
 </div>
 
+<div class="row" layout:fragment="content-body">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Biodata Person</h3>
+				<button class="float-right btn-primary" id="btn-tambah-biodata">Tambah</button>
+			</div>
+			<div class="card-body table-responsive">
+				<table class="table table-striped table-bordered table-hover nowrap" id="tableBiodata" style="width:100%">
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modal-biodata">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Form Biodata</h4>
+					<button aria-label="close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+				<div class="modal-body">
+					<div class="card-header">
+					</div>
+					<form id="form-biodata" role="form">
+						<input name="id" type="hidden"/>
+						
+						<div class="form-group">
+							 <label>NIK: </label>
+                            <input class="form-control" id="nik" name="nik" placeholder="NIK" required type="text">
+						</div>
+						
+						<div class="form-group">
+							<label>Nama: </label>
+                            <input class="form-control" id="nama" name="nama" placeholder="Nama" required type="text">
+						</div>
+						
+						<div class="form-group">
+							<label>Alamat:</label>
+                            <input class="form-control" id="alamat" name="alamat" placeholder="Alamat" required type="text">
+						</div>
+						
+						<div class="form-group">
+							<label>No Hp: </label>
+                            <input class="form-control" id="nohp" name="nohp" placeholder="No Hp" required type="text">
+						</div>
+						
+						<div class="form-group">
+							<label>Tanggal Lahir : </label>
+                            <input class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="Tanggal Lahir" required type="date">
+						</div>
+						
+						<div class="form-group">
+							<label>Tempat Lahir : </label>
+                            <input class="form-control" id="tempatLahir" name="tempatLahir" placeholder="Tempat Lahir" required type="text">
+						</div>
+					</form>					
+				</div>
+				<div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" id="btn-save-biodata" type="button">Save</button>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>	
+	
+
+<th:block layout:fragment="add-scripts">
+	<script th:src="@{/js/dataperson.js}"></script>
+	
+	<script>
+		$('#btn-tambah-biodata').click(function () {
+            $('#modal-biodata').modal('show')
+        });
+		
+		$('#btn-save-biodata').click(function() {
+			formBiodata.saveForm()
+		});
+	</script>
+</th:block>
+	
 </html>

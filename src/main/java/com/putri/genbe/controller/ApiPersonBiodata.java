@@ -1,9 +1,11 @@
 package com.putri.genbe.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import com.putri.genbe.repository.PersonRepository;
 import com.putri.genbe.service.PersonBiodataService;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/dataperson")
 public class ApiPersonBiodata {
 
 	@Autowired
@@ -38,14 +40,17 @@ public class ApiPersonBiodata {
 
 	@PostMapping
 	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
+		Date dob = dto.getTanggalLahir();
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period p = Period.between(birthDate, today);
 		Integer panjangNik = dto.getNik().length();
-		Integer umur = Integer.parseInt(calculateAge(dto.getTanggalLahir()));
-		if (panjangNik != 16 && umur < 30) {
+		if (panjangNik != 16 && (p.getYears() < 30)) {
 			return status(false,
 					"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
 		} else if (panjangNik != 16) {
 			return status(false, "data gagal masuk, jumlah digit nik tidak sama dengan 16");
-		} else if (umur < 30) {
+		} else if (p.getYears() < 30) {
 			return status(false, "data gagal masuk, umur kurang dari 30 tahun");
 		} else {
 			personBiodataService.saveBiodataToPerson(dto);

@@ -2,6 +2,8 @@ package com.putri.genbe.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.putri.genbe.repository.PendidikanRepository;
 import com.putri.genbe.repository.PersonRepository;
 
 @Service
+@Transactional
 public class PendidikanServiceImpl implements PendidikanService {
 
 	@Autowired
@@ -24,10 +27,8 @@ public class PendidikanServiceImpl implements PendidikanService {
 	public List<PendidikanDto> savePendidikan(List<PendidikanDto> pendidikanDto, Integer idPerson) {
 		for (PendidikanDto dto : pendidikanDto) {
 			Pendidikan pendidikan = convertToEntity(dto);
-			if (personRepository.findById(idPerson).isPresent()) {
-				Person person = personRepository.findById(idPerson).get();
-				pendidikan.setPerson(person);
-			}
+			Person person = personRepository.findById(idPerson).get();
+			pendidikan.setPerson(person);
 			pendidikanRepository.save(pendidikan);
 		}
 		return pendidikanDto;

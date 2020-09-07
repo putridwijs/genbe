@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+	<div class="col-sm-6">
+		<h1 class="m-0 text-dark">Biodata</h1>
+	</div>
+</div>
+
+<div class="row" layout:fragment="content-body">
+    <div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Biodata Person</h3>
+				<button class="float-right btn-primary" id="btn-tambah-biodata">Tambah</button>
+			</div>
+			<div class="card-body table-responsive">
+				<table class="table table-striped table-bordered table-hover nowrap" id="tableBiodata" style="width:100%">
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+    <div class="modal fade" id="modal-biodata">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Biodata</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-header">
+
+                    </div>
+                    <form id="form-biodata" role="form">
+                        <input name="id" type="hidden"/>
+						
+						<div class="form-group">
+                            <label>NIK: </label>
+                            <input class="form-control" id="nik" name="nik" placeholder="NIK" required type="text">
+                        </div>
+						
+                        <div class="form-group">
+                            <label>Nama: </label>
+                            <input class="form-control" id="nama" name="nama" placeholder="Nama" required type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Alamat:</label>
+                            <input class="form-control" id="alamat" name="alamat" placeholder="Alamat" required type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label>No Hp: </label>
+                            <input class="form-control" id="nohp" name="nohp" placeholder="No Hp" required type="text">
+                        </div>
+
+						<div class="form-group">
+                            <label>Tanggal Lahir : </label>
+                            <input class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="Tanggal Lahir" required type="date">
+                        </div>
+						
+                        <div class="form-group">
+                            <label>Tempat Lahir : </label>
+                            <input class="form-control" id="tempatLahir" name="tempatLahir" placeholder="Tempat Lahir" required type="text">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" id="btn-save-biodata" type="button">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block layout:fragment="add-scripts">
+    <script th:src="@{/js/dataperson.js}"></script>
+
+    <script>
+        $('#btn-tambah-biodata').click(function () {
+            $('#modal-biodata').modal('show')
+        });
+
+        $('#btn-save-biodata').click(function () {
+            formBiodata.saveForm()
+        })
+
+    </script>
+</th:block>
+
+</html>
+
+
