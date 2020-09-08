@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/")
 public class BaseMvcController {
-	@GetMapping("dashboard")
-	public String dashboard() {
-		return "dashboard/dataperson";
-	}
+//	@GetMapping("dashboard")
+//	public String dashboard() {
+//		return "dashboard/dataperson";
+//	}
+//	
+//	@GetMapping("person")
+//	public String person() {
+//		return "dashboard/dataperson";
+//	}
 	
 	@GetMapping("person")
-	public String person() {
-		return "dashboard/dataperson";
-	}
-	
-	@GetMapping("dataperson")
 	public String dataperson() {
 		return "person/person";
 	}
@@ -29,7 +29,7 @@ public class BaseMvcController {
 		return "pendidikan/pendidikan";
 	}
 	
-	@GetMapping("api/dataperson")
+	@GetMapping("getdata")
 	public String get() {
 		return "person/get";
 	}
