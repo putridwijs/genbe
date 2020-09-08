@@ -27,8 +27,8 @@ public class ApiPendidikan {
 	@Autowired
 	private PersonRepository personRepository;
 
-	@PostMapping
-	public Response insert(@RequestBody (required = false) List<PendidikanDto> pendidikanDto, @RequestParam Integer idPerson) {
+	@PostMapping ("/{idPerson}")
+	public Response insert(@RequestBody (required = false) List<PendidikanDto> pendidikanDto, @PathVariable Integer idPerson) {
 		if (personRepository.findById(idPerson).isPresent()) {
 			pendidikanService.savePendidikan(pendidikanDto, idPerson);
 			return status(true, "data berhasil masuk");

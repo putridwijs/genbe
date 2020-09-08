@@ -7,7 +7,9 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +28,7 @@ import com.putri.genbe.repository.PersonRepository;
 import com.putri.genbe.service.PersonBiodataService;
 
 @RestController
-@RequestMapping("/dataperson")
+@RequestMapping("/api/person")
 public class ApiPersonBiodata {
 
 	@Autowired
@@ -37,27 +39,17 @@ public class ApiPersonBiodata {
 
 	@Autowired
 	private PendidikanRepository pendidikanRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
-	@PostMapping
-	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
-		Date dob = dto.getTanggalLahir();
-		LocalDate today = LocalDate.now();
-		LocalDate birthDate = dob.toLocalDate();
-		Period p = Period.between(birthDate, today);
-		Integer panjangNik = dto.getNik().length();
-		if (panjangNik != 16 && (p.getYears() < 30)) {
-			return status(false,
-					"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
-		} else if (panjangNik != 16) {
-			return status(false, "data gagal masuk, jumlah digit nik tidak sama dengan 16");
-		} else if (p.getYears() < 30) {
-			return status(false, "data gagal masuk, umur kurang dari 30 tahun");
-		} else {
-			personBiodataService.saveBiodataToPerson(dto);
-			return status(true, "data berhasil masuk");
-		}
+	@GetMapping()
+	public List<PersonBiodataDto> getListPB(){
+		List<Person> list = personRepository.findAll();
+		List<PersonBiodataDto> listDto = list.stream().map(person -> mapPBtoPBDto(person)).collect(Collectors.toList());
+		return listDto;
 	}
-
+	
 	@GetMapping("/{nik}")
 	public List<Object> get(@PathVariable String nik) {
 		List<Object> object = new ArrayList<>();
@@ -84,6 +76,26 @@ public class ApiPersonBiodata {
 		return object;
 	}
 
+	@PostMapping
+	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
+		Date dob = dto.getTanggalLahir();
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period p = Period.between(birthDate, today);
+		Integer panjangNik = dto.getNik().length();
+		if (panjangNik != 16 && (p.getYears() < 30)) {
+			return status(false,
+					"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
+		} else if (panjangNik != 16) {
+			return status(false, "data gagal masuk, jumlah digit nik tidak sama dengan 16");
+		} else if (p.getYears() < 30) {
+			return status(false, "data gagal masuk, umur kurang dari 30 tahun");
+		} else {
+			personBiodataService.saveBiodataToPerson(dto);
+			return status(true, "data berhasil masuk");
+		}
+	}
+	
 	private Response status(Boolean status, String message) {
 		Response response = new Response();
 		if (status == false) {
@@ -95,16 +107,30 @@ public class ApiPersonBiodata {
 		}
 		return response;
 	}
-
-	private String calculateAge(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		Integer age = Year.now().getValue() - calendar.get(Calendar.YEAR);
-		String age1 = Integer.toString(age);
-		return age1;
+	
+	private PersonBiodataDto mapPBtoPBDto(Person person) {
+		PersonBiodataDto dto = modelMapper.map(person, PersonBiodataDto.class);
+		modelMapper.map(person.getBiodata(), dto);
+		return dto;
 	}
 
+//	private String calculateAge(per date) {
+//		Date dob = dto.getTanggalLahir();
+//		LocalDate today = LocalDate.now();
+//		LocalDate birthDate = dob.toLocalDate();
+//		Period p = Period.between(birthDate, today);
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(date);
+//		Integer age = Year.now().getValue() - calendar.get(Calendar.YEAR);
+//		String age1 = Integer.toString(age);
+//		return age1;
+//	}
+
 	private PersonBioPendidikanDto convertToDTo(Person person) {
+		Date dob = person.getBiodata().getTanggalLahir();
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period umur = Period.between(birthDate, today);
 		PersonBioPendidikanDto dto = new PersonBioPendidikanDto();
 		dto.setNik(person.getNik());
 		dto.setNama(person.getNama());
@@ -112,7 +138,7 @@ public class ApiPersonBiodata {
 		dto.setNoHp(person.getBiodata().getNoHp());
 		dto.setTanggalLahir(person.getBiodata().getTanggalLahir());
 		dto.setTempatLahir(person.getBiodata().getTempatLahir());
-		dto.setUmur(calculateAge(person.getBiodata().getTanggalLahir()));
+		dto.setUmur(Integer.toString(umur.getYears()));
 		dto.setPendidikanTerakhir(pendidikanRepository.cariJenjangPendidikan(person.getIdPerson()));
 		return dto;
 	}
