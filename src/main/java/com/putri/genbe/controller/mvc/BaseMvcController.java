@@ -26,7 +26,7 @@ public class BaseMvcController {
 	
 	@GetMapping("pendidikan")
 	public String pendidikan() {
-		return "dashboard/datapendidikan";
+		return "pendidikan/pendidikan";
 	}
 	
 	@GetMapping("person1")

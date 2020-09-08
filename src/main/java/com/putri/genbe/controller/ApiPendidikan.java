@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,8 @@ public class ApiPendidikan {
 	@Autowired
 	private PersonRepository personRepository;
 
-	@PostMapping ("/{idPerson}")
-	public Response insert(@RequestBody (required = false) List<PendidikanDto> pendidikanDto, @PathVariable Integer idPerson) {
+	@PostMapping
+	public Response insert(@RequestBody List<PendidikanDto> pendidikanDto, @RequestParam Integer idPerson) {
 		if (personRepository.findById(idPerson).isPresent()) {
 			pendidikanService.savePendidikan(pendidikanDto, idPerson);
 			return status(true, "data berhasil masuk");

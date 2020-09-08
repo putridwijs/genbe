@@ -43,10 +43,19 @@
 							<label>Id Person</label>
 							<input class="form-control" id="idPerson" name="idPerson" placeholder="id person" required type="text">
 						</div>
-						
+						<fieldset class="fieldset">
 						<div class="form-group">
 							<label>Jenjang</label>
-							<input class="form-control" id="jenjang" name="jenjang" placeholder="jenjang" required type="text">
+							<select class="form-control custom-select" id="jenjang" name="jenjang">
+								<option value="">--PILIH JENJANG PENDIDIKAN--</option>
+								<option value="SD">SD</option>
+								<option value="SMP">SMP</option>
+								<option value="SMA/SMK">SMA</option>
+								<option value="S1">S1</option>
+								<option value="S2">S2</option>
+								<option value="S3">S3</option>
+							</select>
+							<!-- <input class="form-control" id="jenjang" name="jenjang" placeholder="jenjang" required type="text"> -->
 						</div>
 						
 						<div class="form-group">
@@ -63,15 +72,39 @@
 							<label>Tahun Lulus</label>
 							<input class="form-control" id="tahunLulus" name="tahunLulus" placeholder="tahun lulus" required type="text">
 						</div>
+						</fieldset>
 					</form>
 				</div>
 				<div class="modal-footer justify-content-between">
                     <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-warning" id="btn-tambah-field" type="button">Tambah Field</button>
                     <button class="btn btn-primary" id="btn-save-biodata" type="button">Save</button>
                 </div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<th:block layout:fragment="add-scripts">
+    <script th:src="@{/js/datapendidikan.js}"></script>
+
+    <script>
+       
+	    $('#btn-tambah-biodata').click(function () {
+    		formBiodata.resetform();
+    		$('#modal-biodata').modal('show')
+            
+        });
+		
+	    $('#btn-tambah-field').click(function () {
+            formBiodata.addField()
+        })
+	    
+        $('#btn-save-biodata').click(function () {
+            formBiodata.saveForm()
+        })
+
+    </script>
+</th:block>
 
 </html>

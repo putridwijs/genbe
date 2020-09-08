@@ -14,10 +14,30 @@ var tableBiodata = {
 					console.log(res);
 					$('#tableBiodata').DataTable({
 						data: res,
-						column: [
+						columns: [
 							{
 								title: "NIK",
 								data: 'nik'
+							},
+							{
+								title: "Nama",
+								data: 'nama'
+							},
+							{
+								title: "Alamat",
+								data: 'alamat'
+							},
+							{
+								title: "No Hp",
+								data: 'noHp'
+							},
+							{
+								title: "Tanggal Lahir",
+								data: 'tanggalLahir'
+							},
+							{
+								title: "Tempat Lahir",
+								data: 'tempatLahir'
 							}
                        ]
                   });
@@ -33,7 +53,7 @@ var tableBiodata = {
 };
 
 var formBiodata = {
-	resetForm: function () {
+	resetform: function () {
         $('#form-biodata')[0].reset();
     },
     saveForm: function () {
@@ -54,7 +74,7 @@ var formBiodata = {
 
                     }
                 },
-                erorrr: function (err) {
+                error: function (err) {
                     console.log(err);
                 }
             });
@@ -77,7 +97,7 @@ var formBiodata = {
 
                 }
             },
-            erorrr: function (err) {
+            error: function (err) {
                 console.log(err);
             }
         });
