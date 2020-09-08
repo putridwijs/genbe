@@ -29,8 +29,8 @@ public class BaseMvcController {
 		return "pendidikan/pendidikan";
 	}
 	
-	@GetMapping("person1")
+	@GetMapping("api/dataperson")
 	public String get() {
-		return "person";
+		return "person/get";
 	}
 }

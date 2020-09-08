@@ -38,6 +38,10 @@ var tableBiodata = {
 							{
 								title: "Tempat Lahir",
 								data: 'tempatLahir'
+							},
+							{
+								title: "Umur",
+								data: 'umur'
 							}
                        ]
                   });

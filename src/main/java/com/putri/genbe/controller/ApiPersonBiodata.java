@@ -22,6 +22,7 @@ import com.putri.genbe.dto.PersonBioPendidikanDto;
 import com.putri.genbe.dto.PersonBiodataDto;
 import com.putri.genbe.dto.Response;
 import com.putri.genbe.dto.ResponseLengkap;
+import com.putri.genbe.entity.Pendidikan;
 import com.putri.genbe.entity.Person;
 import com.putri.genbe.repository.PendidikanRepository;
 import com.putri.genbe.repository.PersonRepository;
@@ -75,6 +76,33 @@ public class ApiPersonBiodata {
 		}
 		return object;
 	}
+	
+//	@GetMapping("/data")
+//	public List<Object> getData() {
+//		List<Object> object = new ArrayList<>();
+//////		List<PersonBioPendidikanDto> bioPendidikanDtos = pendidikanRepository.findAll();
+////		List<Pendidikan> list = pendidikanRepository.findAll();
+////		List<Person> person = personRepository.findAll();
+////		List<Object> objects = convertToDToList(list);
+//////		objects.add(list);
+////		object.add(objects);
+//////		Date dob = person.getBiodata().getTanggalLahir();
+////		LocalDate today = LocalDate.now();
+////		LocalDate birthDate = dob.toLocalDate();
+////		Period umur = Period.between(birthDate, today);
+////		PersonBioPendidikanDto dto = new PersonBioPendidikanDto();
+////		List<PersonBioPendidikanDto> list2 = list.stream().map(pendidikan -> mapPBPtoPBP(pendidikan)).collect(Collectors.toList());
+////		object.add(list2);
+////		return object;
+//		List<Pendidikan> list = pendidikanRepository.findAll();
+//		
+////		List<Person> person = personRepository.findAll();
+//		PersonBioPendidikanDto dto = (PersonBioPendidikanDto) convertToDTo(list);
+//		object.add(dto);
+//		return object;
+////		List<PersonBioPendidikanDto> dtos = list.stream().map(pendidikan -> mapPBPtoPBP(pendidikan)).collect(Collectors.toList());
+////		return dtos;
+//	}
 
 	@PostMapping
 	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
@@ -108,6 +136,13 @@ public class ApiPersonBiodata {
 		return response;
 	}
 	
+	private PersonBioPendidikanDto mapPBPtoPBP(Pendidikan pendidikan) {
+		PersonBioPendidikanDto dto = modelMapper.map(pendidikan, PersonBioPendidikanDto.class);
+		modelMapper.map(pendidikan.getPerson().getBiodata(), dto);
+		modelMapper.map(pendidikan.getPerson(), dto);
+		return dto;
+	}
+	
 	private PersonBiodataDto mapPBtoPBDto(Person person) {
 		PersonBiodataDto dto = modelMapper.map(person, PersonBiodataDto.class);
 		modelMapper.map(person.getBiodata(), dto);
@@ -125,7 +160,26 @@ public class ApiPersonBiodata {
 //		String age1 = Integer.toString(age);
 //		return age1;
 //	}
-
+	
+	private List<Object> convertToDToList(List<Pendidikan> list) {
+		List<Object> object = new ArrayList<>();
+		Date dob = ((Person) list).getBiodata().getTanggalLahir();
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period umur = Period.between(birthDate, today);
+		PersonBioPendidikanDto dto = new PersonBioPendidikanDto();
+		dto.setNik(((PersonBioPendidikanDto) list).getNik());
+		dto.setNama(((PersonBioPendidikanDto) list).getNama());
+		dto.setAlamat(((PersonBioPendidikanDto) list).getAlamat());
+		dto.setNoHp(((Person) list).getBiodata().getNoHp());
+		dto.setTanggalLahir(((Person) list).getBiodata().getTanggalLahir());
+		dto.setTempatLahir(((Person) list).getBiodata().getTempatLahir());
+		dto.setUmur(Integer.toString(umur.getYears()));
+		dto.setPendidikanTerakhir(pendidikanRepository.cariJenjangPendidikan(((Person) list).getIdPerson()));
+		object.add(dto);
+		return object;
+	}
+	
 	private PersonBioPendidikanDto convertToDTo(Person person) {
 		Date dob = person.getBiodata().getTanggalLahir();
 		LocalDate today = LocalDate.now();
