@@ -38,10 +38,6 @@ var tableBiodata = {
 							{
 								title: "Tempat Lahir",
 								data: 'tempatLahir'
-							},
-							{
-								title: "Umur",
-								data: 'umur'
 							}
                        ]
                   });
@@ -72,11 +68,43 @@ var formBiodata = {
                 data: JSON.stringify(dataResult),
                 success: function (res, status, xhr) {
                     if (xhr.status == 200 || xhr.status == 201) {
-                        $('#modal-biodata').modal('hide')
-
-                    } else {
-
+                    if($('#nik').val().length != 16){
+                    	Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Jumlah digit NIK tidak sama dengan 16'
+						})
+                    } else{
+                    	var dob = $('#tanggalLahir').val();
+			   			dob = new Date(dob);
+			   			var today = new Date();
+			   			var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+			   			if(age < 30){
+				   			Swal.fire({
+					   		icon: 'error',
+					   		title: 'Oops...',
+					   		text: 'Usia anda kurang dari 30'
+							})
+						} else{
+                        	$('#modal-biodata').modal('hide')
+							  const Toast = Swal.mixin({
+								  toast: true,
+								  position: 'top-end',
+								  showConfirmButton: false,
+								  timer: 3000,
+								  timerProgressBar: true,
+								  onOpen: (toast) => {
+						    		toast.addEventListener('mouseenter', Swal.stopTimer)
+						    		toast.addEventListener('mouseleave', Swal.resumeTimer)
+						 		 }
+							  })
+							Toast.fire({
+							  	icon: 'success',
+							  	title: 'Data berhasil masuk'
+						  	})
+						}
                     }
+                }
                 },
                 error: function (err) {
                     console.log(err);
