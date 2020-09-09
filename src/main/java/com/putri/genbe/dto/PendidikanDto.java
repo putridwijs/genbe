@@ -1,10 +1,19 @@
 package com.putri.genbe.dto;
 
 public class PendidikanDto {
+	private Integer idPerson;
 	private String jenjang;
 	private String institusi;
 	private String tahunMasuk;
 	private String tahunLulus;
+	
+	public Integer getIdPerson() {
+		return idPerson;
+	}
+
+	public void setIdPerson(Integer idPerson) {
+		this.idPerson = idPerson;
+	}
 
 	public String getJenjang() {
 		return jenjang;

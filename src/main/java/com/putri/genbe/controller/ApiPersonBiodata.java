@@ -66,6 +66,13 @@ public class ApiPersonBiodata {
 		return dto;
 	}
 	
+	@GetMapping("/semuadata")
+	public List<PersonBioPendidikanDto> get(){
+		List<Person> list = personRepository.findAll();
+		List<PersonBioPendidikanDto> dtos = list.stream().map(person -> mapPBPtoPBP(person)).collect(Collectors.toList());
+		return dtos;
+	}
+	
 	@GetMapping("/{nik}")
 	public List<Object> get(@PathVariable String nik) {
 		List<Object> object = new ArrayList<>();
@@ -151,10 +158,15 @@ public class ApiPersonBiodata {
 		return response;
 	}
 	
-	private PersonBioPendidikanDto mapPBPtoPBP(Pendidikan pendidikan) {
-		PersonBioPendidikanDto dto = modelMapper.map(pendidikan, PersonBioPendidikanDto.class);
-		modelMapper.map(pendidikan.getPerson().getBiodata(), dto);
-		modelMapper.map(pendidikan.getPerson(), dto);
+	private PersonBioPendidikanDto mapPBPtoPBP(Person person) {
+		PersonBioPendidikanDto dto = modelMapper.map(person, PersonBioPendidikanDto.class);
+		modelMapper.map(person.getBiodata(), dto);
+		Date dob = (person.getBiodata().getTanggalLahir());
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period umur = Period.between(birthDate, today);
+		dto.setUmur(Integer.toString(umur.getYears()));
+		dto.setPendidikanTerakhir(pendidikanRepository.cariJenjangPendidikan(person.getIdPerson()));
 		return dto;
 	}
 	

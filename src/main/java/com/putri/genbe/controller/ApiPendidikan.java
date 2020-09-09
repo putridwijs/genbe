@@ -1,7 +1,10 @@
 package com.putri.genbe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.putri.genbe.dto.PendidikanDto;
 import com.putri.genbe.dto.Response;
+import com.putri.genbe.entity.Pendidikan;
+import com.putri.genbe.repository.PendidikanRepository;
 import com.putri.genbe.repository.PersonRepository;
 import com.putri.genbe.service.PendidikanService;
 
 @RestController
-@RequestMapping("/pendidikan")
+@RequestMapping("/api/pendidikan")
 public class ApiPendidikan {
 
 	@Autowired
@@ -27,7 +32,29 @@ public class ApiPendidikan {
 	
 	@Autowired
 	private PersonRepository personRepository;
-
+	
+	@Autowired
+	private PendidikanRepository pendidikanRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@GetMapping
+	public List<PendidikanDto> get(){
+		List<Pendidikan> list = pendidikanRepository.findAll();
+		List<PendidikanDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
+		return dtos;
+	}
+	
+//	@GetMapping("/{idPerson}")
+//	public List<Object> getById(@PathVariable Integer idPerson){
+//		List<Object> objects = new ArrayList<>();
+//		
+//		List<Pendidikan> list = pendidikanRepository.findAll();
+//		List<PendidikanDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
+//		return dtos;
+//	}
+	
 	@PostMapping
 	public Response insert(@RequestBody List<PendidikanDto> pendidikanDto, @RequestParam Integer idPerson) {
 		if (personRepository.findById(idPerson).isPresent()) {
@@ -36,6 +63,12 @@ public class ApiPendidikan {
 		} else {
 			return status(false, "data gagal masuk");
 		}
+	}
+	
+	private PendidikanDto mapPendidikanToDTO(Pendidikan pendidikan) {
+		PendidikanDto dto = modelMapper.map(pendidikan, PendidikanDto.class);
+		dto.setIdPerson(pendidikan.getPerson().getIdPerson());
+		return dto;
 	}
 
 	private Response status(Boolean status, String message) {

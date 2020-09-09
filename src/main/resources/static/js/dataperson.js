@@ -40,7 +40,7 @@ var tableBiodata = {
 								data: 'tempatLahir'
 							},
 							{
-                                title: "Action",
+                                title: "Edit Data",
                                 data: null,
                                 render: function (data, type, row) {
                                     return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"

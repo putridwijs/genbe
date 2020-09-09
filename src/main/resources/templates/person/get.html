@@ -13,11 +13,6 @@
 <div class="row" layout:fragment="content-body">
     <div class="col-12">
 		<div class="card">
-			<div class="card-header">
-				<h5>Cari Data Berdasarkan NIK</h5>
-				<input class="form-control" name="nik" id="nik" type="text">
-				<button class="btn-primary" id="cari">Cari</button>
-			</div>
 			<div class="card-body table-responsive">
 				<table class="table table-striped table-bordered table-hover nowrap" id="tableBiodata" style="width:100%">
 				</table>
@@ -30,9 +25,10 @@
 <th:block layout:fragment="add-scripts">
     <script th:src="@{/js/getdata.js}"></script>
     <script>
-		$("#cari").click(function(){
+    	tableBiodata.create();
+		/* $("#cari").click(function(){
 			formBiodata.getData($("#nik").val())
-		})
+		}) */
     </script>
 </th:block>
 

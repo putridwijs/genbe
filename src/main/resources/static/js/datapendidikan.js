@@ -1,3 +1,59 @@
+var tableBiodata = {
+	create: function () {
+		if ($.fn.DataTable.isDataTable('#tableBiodata')) {
+			$('#tableBiodata').DataTable().clear();
+			$('#tableBiodata').DataTable().destroy();
+		}
+		
+		$.ajax({
+			url: '/api/pendidikan',
+			method: 'get',
+			contentType: 'application/json',
+			success: function (res, status, xhr){
+				if (xhr.status == 200 || xhr.status == 201){
+					console.log(res);
+					$('#tableBiodata').DataTable({
+						data: res,
+						columns: [
+							{
+								title: "Id Person",
+								data: 'idPerson'
+							},
+							{
+								title: "Jenjang",
+								data: 'jenjang'
+							},
+							{
+								title: "Institusi",
+								data: 'institusi'
+							},
+							{
+								title: "Tahun Masuk",
+								data: 'tahunMasuk'
+							},
+							{
+								title: "Tahun Lulus",
+								data: 'tahunLulus'
+							},
+							{
+                                title: "Edit Data",
+                                data: null,
+                                render: function (data, type, row) {
+                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
+                                }
+                            }
+                       ]
+                  });
+              } else {
+              
+              }
+	},
+	error: function (err) {
+		console.log(err);
+	}
+});
+}
+};
 var formBiodata = {
 	resetform: function () {
         $('#form-biodata')[0].reset();
