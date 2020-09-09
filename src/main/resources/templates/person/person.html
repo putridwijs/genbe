@@ -13,7 +13,7 @@
 <div class="row" layout:fragment="content-body">
     <div class="col-12">
 		<div class="card">
-			<div class="card-header">
+			<div class="card-header bg-navy">
 				<h3 class="card-title">Biodata Person</h3>
 				<button class="float-right btn-primary" id="btn-tambah-biodata">Tambah</button>
 			</div>
@@ -29,18 +29,19 @@
     <div class="modal fade" id="modal-biodata">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-navy">
                     <h4 class="modal-title">Form Biodata</h4>
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-gray">
                     <div class="card-header">
 
                     </div>
                     <form id="form-biodata" role="form">
-                        <input name="id" type="hidden"/>
+                        <input name="idPerson" id="idPerson" type="hidden"/>
+                        <input name="idBio" id="idBio" type="hidden"/>
 						
 						<div class="form-group">
                             <label>NIK: </label>
@@ -97,7 +98,7 @@
     }); */
        
     $('#btn-tambah-biodata').click(function () {
-    		formBiodata.resetform();
+    		formBiodata.resetForm();
             $('#modal-biodata').modal('show')
         });
 

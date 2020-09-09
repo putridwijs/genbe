@@ -51,6 +51,21 @@ public class ApiPersonBiodata {
 		return listDto;
 	}
 	
+	@GetMapping("/data/{idPerson}")
+	public PersonBiodataDto getPB(@PathVariable Integer idPerson) {
+		Person person = personRepository.findById(idPerson).get();
+		PersonBiodataDto dto = new PersonBiodataDto();
+		dto.setIdPerson(person.getIdPerson());
+		dto.setIdBio(person.getBiodata().getIdBio());
+		dto.setNik(person.getNik());
+		dto.setNama(person.getNama());
+		dto.setAlamat(person.getAlamat());
+		dto.setNoHp(person.getBiodata().getNoHp());
+		dto.setTanggalLahir(person.getBiodata().getTanggalLahir());
+		dto.setTempatLahir(person.getBiodata().getTempatLahir());
+		return dto;
+	}
+	
 	@GetMapping("/{nik}")
 	public List<Object> get(@PathVariable String nik) {
 		List<Object> object = new ArrayList<>();

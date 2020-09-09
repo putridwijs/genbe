@@ -2,7 +2,7 @@ var tableBiodata = {
 	create: function () {
 		if ($.fn.DataTable.isDataTable('#tableBiodata')) {
 			$('#tableBiodata').DataTable().clear();
-			$('#tableBiodata').DataTabel().destroy();
+			$('#tableBiodata').DataTable().destroy();
 		}
 		
 		$.ajax({
@@ -38,7 +38,14 @@ var tableBiodata = {
 							{
 								title: "Tempat Lahir",
 								data: 'tempatLahir'
-							}
+							},
+							{
+                                title: "Action",
+                                data: null,
+                                render: function (data, type, row) {
+                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
+                                }
+                            }
                        ]
                   });
               } else {
@@ -53,8 +60,10 @@ var tableBiodata = {
 };
 
 var formBiodata = {
-	resetform: function () {
+	resetForm: function () {
         $('#form-biodata')[0].reset();
+        $('#idPerson').val("");
+        $('#idBio').val("");
     },
     saveForm: function () {
     if ($('#form-biodata').parsley().validate()) {
@@ -86,6 +95,7 @@ var formBiodata = {
 					   		text: 'Usia anda kurang dari 30'
 							})
 						} else{
+							tableBiodata.create();
                         	$('#modal-biodata').modal('hide')
 							  const Toast = Swal.mixin({
 								  toast: true,
@@ -112,11 +122,11 @@ var formBiodata = {
             });
      }
     },
-    setEditData: function (idCabang) {
+    setEditData: function (idPerson) {
         formBiodata.resetForm();
 
         $.ajax({
-            url: '/api/biodata/' + idCabang,
+            url: '/api/person/data/' + idPerson,
             method: 'get',
             contentType: 'application/json',
             dataType: 'json',
