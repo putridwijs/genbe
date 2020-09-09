@@ -14,13 +14,15 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header bg-warning">
-				<h3 class="card-title">Jenjang Pendidikan</h3><br>
+				<h3 class="card-title">ID Person</h3><br>
 				<input class="col-10" type="text" id="idPerson" name="idPerson" placeholder="ID Person" required>
 				<button class="float-right bg-navy" id="btn-tambah-biodata">Tambah</button>
 			</div>
-			<div class="card-body table-responsive">
-				<table class="table table-striped table-bordered table-hover nowrap" id="tableBiodata" style="width:100%"></table>
+			<div class="card-body table-responsive bg-gray">
+				<table class="table table-striped table-bordered table-hover nowrap bg-white" id="tableBiodata" style="width:100%"></table>
 			</div>
+			<button class="float-right bg-navy" id="btn-save-biodata">Save</button>
+			<button class="float-right bg-warning text-bold" id="btn-cancel-biodata">Cancel</button>
 		</div>
 	</div>
 	
@@ -78,8 +80,8 @@
 				</div>
 				<div class="modal-footer justify-content-between bg-gray-dark">
                     <button class="btn btn-danger" data-dismiss="modal" type="button">Close</button>
-                    <button class="btn btn-warning" id="btn-tambah-field" type="button">Tambah Field</button>
-                    <button class="btn btn-primary" id="btn-save-biodata" type="button">Save</button>
+                   <!--  <button class="btn btn-warning" id="btn-tambah-field" type="button">Tambah Field</button> -->
+                    <button class="btn btn-primary" id="btn-submit-biodata" type="button">Submit</button>
                 </div>
 			</div>
 		</div>
@@ -87,6 +89,7 @@
 </div>
 
 <th:block layout:fragment="add-scripts">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script th:src="@{/js/datapendidikan.js}"></script>
 
     <script>
@@ -103,8 +106,18 @@
             formBiodata.addField()
         })
 	    
+        $('#btn-submit-biodata').click(function () {
+            formBiodata.addData();
+        })
+        
+        $('#btn-cancel-biodata').click(function(){
+	    	$('.table-responsive').remove();
+	    })
+        
         $('#btn-save-biodata').click(function () {
-            formBiodata.saveForm()
+            formBiodata.saveForm();
+            $('input[name=idPerson]').val(' ');
+            var dataPen=[];
         })
 
     </script>

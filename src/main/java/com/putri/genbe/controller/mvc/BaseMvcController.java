@@ -14,10 +14,10 @@ public class BaseMvcController {
 //		return "dashboard/dataperson";
 //	}
 //	
-//	@GetMapping("person")
-//	public String person() {
-//		return "dashboard/dataperson";
-//	}
+	@GetMapping("datapendidikan")
+	public String person() {
+		return "pendidikan/datapendidikan";
+	}
 	
 	@GetMapping("person")
 	public String dataperson() {
