@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.putri.genbe.entity.Biodata;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -128,22 +129,31 @@ public class ApiPersonBiodata {
 
 	@PostMapping
 	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
-		Date dob = dto.getTanggalLahir();
-		LocalDate today = LocalDate.now();
-		LocalDate birthDate = dob.toLocalDate();
-		Period p = Period.between(birthDate, today);
-		Integer panjangNik = dto.getNik().length();
-		if (panjangNik != 16 && (p.getYears() < 30)) {
-			return status(false,
-					"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
-		} else if (panjangNik != 16) {
-			return status(false, "data gagal masuk, jumlah digit nik tidak sama dengan 16");
-		} else if (p.getYears() < 30) {
-			return status(false, "data gagal masuk, umur kurang dari 30 tahun");
-		} else {
-			personBiodataService.saveBiodataToPerson(dto);
-			return status(true, "data berhasil masuk");
-		}
+		Response status = new Response();
+		Biodata biodata = modelMapper.map(dto, Biodata.class);
+//		mapping data PersonBiodataDto ke Person
+		Person person = modelMapper.map(dto, Person.class);
+//		set person
+		biodata.setPerson(person);
+		personBiodataService.insertDataPerson(dto, person, biodata, status);
+		return status;
+//		Date dob = dto.getTanggalLahir();
+//		LocalDate today = LocalDate.now();
+//		LocalDate birthDate = dob.toLocalDate();
+//		Period p = Period.between(birthDate, today);
+//		String nik = dto.getNik();
+//		Integer panjangNik = dto.getNik().length();
+//		if (panjangNik != 16 && (p.getYears() < 30)) {
+//			return status(false,"data gagal masuk, jumlah digit nik tidak sama dengan 16 dan umur kurang dari 30 tahun");
+//		} else if (panjangNik != 16) {
+//			return status(false, "data gagal masuk, jumlah digit nik tidak sama dengan 16");
+//		} else if (p.getYears() < 30) {
+//			return status(false, "data gagal masuk, umur kurang dari 30 tahun");
+//		} else if ()
+//		else {
+//			personBiodataService.saveBiodataToPerson(dto);
+//			return status(true, "data berhasil masuk");
+//		}
 	}
 	
 	private Response status(Boolean status, String message) {

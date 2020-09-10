@@ -118,6 +118,11 @@ var formBiodata = {
                 },
                 error: function (err) {
                     console.log(err);
+					Swal.fire({
+						icon: 'error',
+						title: 'Oops...',
+						text: 'NIK ' + $("#nik").val() + ' sudah ada'
+					})
                 }
             });
      }

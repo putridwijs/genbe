@@ -45,7 +45,8 @@ public class ApiPendidikan {
 		List<PendidikanDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
 		return dtos;
 	}
-	
+
+
 //	@GetMapping("/{idPerson}")
 //	public List<Object> getById(@PathVariable Integer idPerson){
 //		List<Object> objects = new ArrayList<>();

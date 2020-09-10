@@ -81,9 +81,7 @@ var formBiodata = {
 					   		title: 'Oops...',
 					   		text: 'Harap Masukan ID Person'
 						})
-                    } else {
-                    	
-                    
+    	} else {
             $.ajax({
                 url: '/api/pendidikan?idPerson=' + $('#idPerson').val(),
                 method: 'post',
@@ -91,45 +89,48 @@ var formBiodata = {
                 dataType: 'json',
                 data: JSON.stringify(dataPen),
                 success: function (res, status, xhr) {
-                    if (xhr.status == 200 || xhr.status == 201) {
-                        $('#modal-biodata').modal('hide')
-                        $('#tableBiodata').remove();
-                    	const Toast = Swal.mixin({
-								  toast: true,
-								  position: 'top-end',
-								  showConfirmButton: false,
-								  timer: 3000,
-								  timerProgressBar: true,
-								  onOpen: (toast) => {
-						    		toast.addEventListener('mouseenter', Swal.stopTimer)
-						    		toast.addEventListener('mouseleave', Swal.resumeTimer)
-						 		 }
-						})
-						Toast.fire({
-							  	icon: 'success',
-							  	title: 'Data berhasil masuk'
-						})	
-                   }
-                },
-                error: function (err) {
+                    error: function (err) {
                     console.log(err);
                     Swal.fire({
 					   		icon: 'error',
 					   		title: 'Oops...',
 					   		text: 'ID kosong atau ID tidak ditemukan'
 					})
+                },
+                if (xhr.status == 200 || xhr.status == 201) {
+							$('#modal-biodata').modal('hide')
+							$('#tableBiodata').remove();
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000,
+								timerProgressBar: true,
+								onOpen: (toast) => {
+									toast.addEventListener('mouseenter', Swal.stopTimer)
+									toast.addEventListener('mouseleave', Swal.resumeTimer)
+								}
+							})
+							Toast.fire({
+								icon: 'success',
+								title: 'Data berhasil masuk'
+							})
+							Swal.fire({
+								icon: 'error',
+								title: 'Oops...',
+								text: 'ID tidak ditemukan'
+							})
                 }
-            });
+            })
             }
-		}     
-     },
-     setEditData: function (row) {
+		}
+   	},
+		setEditData: function (row) {
      	$('#form-biodata').fromJSON(JSON.stringify(dataPen[row]));
      	$('#modal-biodata').modal('show');
      	newrow= row;
-     },
+    },
      eraseRow: function (row) {
-     	var myTable = $('#tableBiodata').DataTable();
-     	myTable.row.delete();
-     }
+     	$('#tableBiodata').dataTable(row).remove();
+    }
 };
