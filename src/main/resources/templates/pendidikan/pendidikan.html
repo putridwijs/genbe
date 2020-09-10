@@ -6,7 +6,7 @@
 
 <div class="row mb-2" layout:fragment="content-header">
 	<div class="col-sm-6">
-		<h1 class="m-0 text-dark">Jenjang Pendidikan</h1>
+		<h1 class="m-0 text-dark" style="font-family:SFMono-Regular; font-size:30px">Jenjang Pendidikan</h1>
 	</div>
 </div>
 
@@ -14,14 +14,14 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header bg-warning">
-				<h3 class="card-title">ID Person</h3><br>
+				<h3 class="card-title" style="font-family:SFMono-Regular;font-size:20px">ID Person</h3><br>
 				<input class="col-10" type="text" id="idPerson" name="idPerson" placeholder="ID Person" required>
 				<button class="float-right bg-navy" id="btn-tambah-biodata">Tambah</button>
 			</div>
 			<div class="card-body bg-gray">
 				<table class="table table-striped table-bordered table-hover nowrap bg-white" id="tableBiodata" style="width:100%"></table>
 				<button class="float-right bg-navy" id="btn-save-biodata">Save</button>
-			<button class="float-right bg-danger text-bold" id="btn-cancel-biodata">Cancel</button>
+				<button class="float-right bg-danger text-bold" id="btn-cancel-biodata">Cancel</button>
 			</div>
 			
 		</div>
@@ -118,7 +118,7 @@
         })
         
         $('#btn-cancel-biodata').click(function(){
-	    	$('.table').remove();
+	    	$('#tableBiodata').remove();
 	    })
         
         $('#btn-save-biodata').click(function () {

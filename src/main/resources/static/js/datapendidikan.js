@@ -8,6 +8,10 @@ var tableBiodata = {
 				$('#tableBiodata').DataTable().destroy();
 			}
 			$('#tableBiodata').DataTable({
+				"info": false,
+				"searching": false,
+				"lengthChange": false,
+				"paginate":false,
 				data: dataPen,
 				columns: [
 							{
@@ -37,7 +41,7 @@ var tableBiodata = {
                                 title: "Hapus",
                                 data: null,
                                 render: function (data, type, row, meta) {
-                                    return "<button class='btn-danger' onclick=formBiodata.editRow('" + meta.row + "')>Hapus</button>"
+                                    return "<button class='btn-danger' onclick=formBiodata.eraseRow('" + meta.row + "')>Hapus</button>"
                                 }
                             }
                  ]
@@ -119,8 +123,8 @@ var formBiodata = {
      	$('#modal-biodata').modal('show');
      	newrow= row;
      },
-     editRow: function (row) {
-     	$(this).closest(columns).get(0);
-		oTable.fnDeleteRow(oTable.fnGetPosition(row));
+     eraseRow: function (row) {
+     	var myTable = $('#tableBiodata').DataTable();
+     	myTable.row.delete();
      }
 };
