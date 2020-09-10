@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 import com.putri.genbe.entity.Pendidikan;
 import com.putri.genbe.entity.Person;
 
+import java.util.List;
+
 @Repository
 public interface PendidikanRepository extends JpaRepository<Pendidikan, Integer> {
 	Pendidikan findAllByPerson(Person person);
+
+	List<Pendidikan> findAllByPerson(Integer idPerson);
 
 	@Query(value = "SELECT jenjang FROM public.t_pendidikan where idperson =?1 order by tahunlulus desc limit 1", nativeQuery = true)
 	public String cariJenjangPendidikan(Integer idPerson);

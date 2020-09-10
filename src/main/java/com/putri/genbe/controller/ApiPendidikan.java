@@ -46,6 +46,13 @@ public class ApiPendidikan {
 		return dtos;
 	}
 
+	@GetMapping("/{idPerson}")
+	public List<PendidikanDto> getById(@PathVariable Integer idPerson){
+		List<Pendidikan> list = pendidikanRepository.findAllByPerson(idPerson);
+		List<PendidikanDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
+		return dtos;
+	}
+
 
 //	@GetMapping("/{idPerson}")
 //	public List<Object> getById(@PathVariable Integer idPerson){
