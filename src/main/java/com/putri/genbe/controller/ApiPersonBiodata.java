@@ -44,7 +44,7 @@ public class ApiPersonBiodata {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping()
+	@GetMapping
 	public List<PersonBiodataDto> getListPB(){
 		List<Person> list = personRepository.findAll();
 		List<PersonBiodataDto> listDto = list.stream().map(person -> mapPBtoPBDto(person)).collect(Collectors.toList());

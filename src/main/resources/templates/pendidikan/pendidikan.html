@@ -18,11 +18,12 @@
 				<input class="col-10" type="text" id="idPerson" name="idPerson" placeholder="ID Person" required>
 				<button class="float-right bg-navy" id="btn-tambah-biodata">Tambah</button>
 			</div>
-			<div class="card-body table-responsive bg-gray">
+			<div class="card-body bg-gray">
 				<table class="table table-striped table-bordered table-hover nowrap bg-white" id="tableBiodata" style="width:100%"></table>
-			</div>
-			<button class="float-right bg-navy" id="btn-save-biodata">Save</button>
+				<button class="float-right bg-navy" id="btn-save-biodata">Save</button>
 			<button class="float-right bg-danger text-bold" id="btn-cancel-biodata">Cancel</button>
+			</div>
+			
 		</div>
 	</div>
 	
@@ -95,7 +96,8 @@
     <script>
     
     	/* tableBiodata.create(); */
-       
+       	var dataPen=[];
+    	var newrow=-1;
 	    $('#btn-tambah-biodata').click(function () {
     		formBiodata.resetform();
     		$('#modal-biodata').modal('show')
@@ -107,17 +109,21 @@
         })
 	    
         $('#btn-submit-biodata').click(function () {
-            formBiodata.addData();
+        	if (newrow < 0){
+            	formBiodata.addData();
+        	} else {
+        		formBiodata.addDataBaru();
+        	}
+        	/* formBiodata.saveData(); */
         })
         
         $('#btn-cancel-biodata').click(function(){
-	    	$('.table-responsive').remove();
+	    	$('.table').remove();
 	    })
         
         $('#btn-save-biodata').click(function () {
             formBiodata.saveForm();
             $('input[name=idPerson]').val(' ');
-            var dataPen=[];
         })
 
     </script>

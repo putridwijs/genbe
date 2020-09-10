@@ -1,10 +1,8 @@
 var dataPen=[];
-var formBiodata = {
-	addData: function(){
+var newrow=-1;
+var tableBiodata = {
+	create: function () {
 		if($('#form-biodata').parsley().validate()){
-			var dataResult = getJsonForm($("#form-biodata").serializeArray(), true);
-			console.log(dataResult);
-			dataPen.push(dataResult);
 			if ($.fn.DataTable.isDataTable('#tableBiodata')) {
 				$('#tableBiodata').DataTable().clear();
 				$('#tableBiodata').DataTable().destroy();
@@ -31,8 +29,15 @@ var formBiodata = {
 							{
                                 title: "Edit Data",
                                 data: null,
-                                render: function (data, type, row) {
-                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
+                                render: function (data, type, row, meta) {
+                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + meta.row + "')>Edit</button>"
+                                }
+                            },
+                            {
+                                title: "Hapus",
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return "<button class='btn-danger' onclick=formBiodata.editRow('" + meta.row + "')>Hapus</button>"
                                 }
                             }
                  ]
@@ -42,6 +47,23 @@ var formBiodata = {
 		} else {
 			
 		}
+	}
+}
+var formBiodata = {
+	addData: function (){
+		var dataResult = getJsonForm($("#form-biodata").serializeArray(), true);
+		console.log(dataResult);
+		dataPen.push(dataResult);
+		tableBiodata.create();
+	},
+	addDataBaru: function(){
+		var newResult = getJsonForm($("#form-biodata").serializeArray(), true);
+		dataPen[newrow] = newResult;
+		tableBiodata.create();
+		newrow=-1;
+	},
+	saveData: function (){
+		tableBiodata.create();
 	},
 	resetform: function () {
         $('#form-biodata')[0].reset();
@@ -90,7 +112,15 @@ var formBiodata = {
                 }
             });
             }
+		}     
+     },
+     setEditData: function (row) {
+     	$('#form-biodata').fromJSON(JSON.stringify(dataPen[row]));
+     	$('#modal-biodata').modal('show');
+     	newrow= row;
+     },
+     editRow: function (row) {
+     	$(this).closest(columns).get(0);
+		oTable.fnDeleteRow(oTable.fnGetPosition(row));
      }
-    }
-
 };
