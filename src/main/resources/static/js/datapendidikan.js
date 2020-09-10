@@ -92,7 +92,9 @@ var formBiodata = {
                 data: JSON.stringify(dataPen),
                 success: function (res, status, xhr) {
                     if (xhr.status == 200 || xhr.status == 201) {
-                    const Toast = Swal.mixin({
+                        $('#modal-biodata').modal('hide')
+                        $('#tableBiodata').remove();
+                    	const Toast = Swal.mixin({
 								  toast: true,
 								  position: 'top-end',
 								  showConfirmButton: false,
@@ -107,12 +109,15 @@ var formBiodata = {
 							  	icon: 'success',
 							  	title: 'Data berhasil masuk'
 						})	
-                    	$('.table-responsive').remove();
-                        $('#modal-biodata').modal('hide')
                    }
                 },
                 error: function (err) {
                     console.log(err);
+                    Swal.fire({
+					   		icon: 'error',
+					   		title: 'Oops...',
+					   		text: 'ID kosong atau ID tidak ditemukan'
+					})
                 }
             });
             }
