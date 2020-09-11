@@ -1,10 +1,8 @@
 package com.putri.genbe.controller.mvc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/")
@@ -24,6 +22,12 @@ public class BaseMvcController {
 		return "person/person";
 	}
 	
+	@GetMapping("pendidikan/{idPerson}")
+	public String pendidikanById(Model model, @PathVariable Integer idPerson) {
+		model.addAttribute("idPerson", idPerson);
+		return "pendidikan/pendidikan";
+	}
+
 	@GetMapping("pendidikan")
 	public String pendidikan() {
 		return "pendidikan/pendidikan";

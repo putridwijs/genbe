@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.putri.genbe.dto.DataLengkapDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,12 +47,12 @@ public class ApiPendidikan {
 		return dtos;
 	}
 
-	@GetMapping("/{idPerson}")
-	public List<PendidikanDto> getById(@PathVariable Integer idPerson){
-		List<Pendidikan> list = pendidikanRepository.findAllByPerson(idPerson);
-		List<PendidikanDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
-		return dtos;
-	}
+//	@GetMapping("/{idPerson}")
+//	public List<DataLengkapDto> getById(@PathVariable Integer idPerson){
+//		List<Pendidikan> list = pendidikanRepository.findAllByPerson(idPerson);
+//		List<DataLengkapDto> dtos = list.stream().map(pendidikan -> mapPendidikanToDTO(pendidikan)).collect(Collectors.toList());
+//		return dtos;
+//	}
 
 
 //	@GetMapping("/{idPerson}")

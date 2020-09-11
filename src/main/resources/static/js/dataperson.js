@@ -40,12 +40,19 @@ var tableBiodata = {
 								data: 'tempatLahir'
 							},
 							{
-                                title: "Edit Data",
+                                title: "Pendidikan",
                                 data: null,
                                 render: function (data, type, row) {
-                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
+                                    return "<a href='/pendidikan/"+ data.idPerson +"'>Tambah Jenjang Pendidikan</a>"
                                 }
-                            }
+                            },
+							{
+								title: "Edit Data",
+								data: null,
+								render: function (data, type, row) {
+									return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
+								}
+							}
                        ]
                   });
               } else {

@@ -15,8 +15,7 @@
 		<div class="card">
 			<div class="card-header bg-warning">
 				<h3 class="card-title" style="font-family:SFMono-Regular;font-size:20px">ID Person</h3><br>
-				<input class="col-10" type="text" id="idPerson" name="idPerson" placeholder="ID Person" required>
-				<button class="float-right bg-danger" id="btn-cari-biodata">Cari Data</button>
+				<input class="col-10" type="text" id="idPerson" name="idPerson" placeholder="ID Person" th:value="${idPerson}" disabled required>
 				<button class="float-right bg-navy" id="btn-tambah-biodata">Tambah</button>
 			</div>
 			<div class="card-body bg-gray">
@@ -82,7 +81,6 @@
 				</div>
 				<div class="modal-footer justify-content-between bg-gray-dark">
                     <button class="btn btn-danger" data-dismiss="modal" type="button">Close</button>
-                   <!--  <button class="btn btn-warning" id="btn-tambah-field" type="button">Tambah Field</button> -->
                     <button class="btn btn-primary" id="btn-submit-biodata" type="button">Submit</button>
                 </div>
 			</div>
@@ -95,27 +93,19 @@
     <script th:src="@{/js/datapendidikan.js}"></script>
 
     <script>
-    
-    	/* tableBiodata.create(); */
        	var dataPen=[];
     	var newrow=-1;
 	    $('#btn-tambah-biodata').click(function () {
     		formBiodata.resetform();
     		$('#modal-biodata').modal('show')
-            
         });
-		
-	    $('#btn-tambah-field').click(function () {
-            formBiodata.addField()
-        })
-	    
+
         $('#btn-submit-biodata').click(function () {
         	if (newrow < 0){
             	formBiodata.addData();
         	} else {
         		formBiodata.addDataBaru();
         	}
-        	/* formBiodata.saveData(); */
         })
         
         $('#btn-cancel-biodata').click(function(){

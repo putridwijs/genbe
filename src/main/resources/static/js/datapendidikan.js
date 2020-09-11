@@ -66,9 +66,6 @@ var formBiodata = {
 		tableBiodata.create();
 		newrow=-1;
 	},
-	saveData: function (){
-		tableBiodata.create();
-	},
 	resetform: function () {
         $('#form-biodata')[0].reset();
     },
