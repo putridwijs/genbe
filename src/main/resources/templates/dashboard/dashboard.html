@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+    <div class="col-sm-6">
+        <h1 class="m-0 text-dark" style="font-family:SFMono-Regular; font-size:30px; font-style: oblique">SELAMAT DATANG</h1>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content-body">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h3 class="card-title" style="font-family:SFMono-Regular;font-size:22px">Semua Data</h3>
+            </div>
+            <a class="float-right w3-button bg-navy" href="/person">Tambah Data</a>
+            <div class="card-body bg-gray table-responsive">
+                <table class="table table-striped table-bordered table-hover nowrap bg-white" id="tableBiodata" style="width:100%">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block layout:fragment="add-scripts">
+    <script th:src="@{/js/dashboard.js}"></script>
+    <script>
+        tableBiodata.create();
+    </script>
+</th:block>
+
+</html>

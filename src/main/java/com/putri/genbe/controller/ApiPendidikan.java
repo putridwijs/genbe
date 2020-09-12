@@ -47,6 +47,13 @@ public class ApiPendidikan {
 		return dtos;
 	}
 
+	@GetMapping ("/data")
+	public List<DataLengkapDto> getData(){
+		List<Pendidikan> list = pendidikanRepository.findAll();
+		List<DataLengkapDto> dtoList = list.stream().map(pendidikan -> mapPendidikanToDataDto(pendidikan)).collect(Collectors.toList());
+		return  dtoList;
+	}
+
 //	@GetMapping("/{idPerson}")
 //	public List<DataLengkapDto> getById(@PathVariable Integer idPerson){
 //		List<Pendidikan> list = pendidikanRepository.findAllByPerson(idPerson);
@@ -77,6 +84,13 @@ public class ApiPendidikan {
 	private PendidikanDto mapPendidikanToDTO(Pendidikan pendidikan) {
 		PendidikanDto dto = modelMapper.map(pendidikan, PendidikanDto.class);
 		dto.setIdPerson(pendidikan.getPerson().getIdPerson());
+		return dto;
+	}
+
+	private DataLengkapDto mapPendidikanToDataDto (Pendidikan pendidikan) {
+		DataLengkapDto dto = modelMapper.map(pendidikan, DataLengkapDto.class);
+		dto.setIdPerson(pendidikan.getPerson().getIdPerson());
+		dto.setNama(pendidikan.getPerson().getNama());
 		return dto;
 	}
 

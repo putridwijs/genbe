@@ -1,10 +1,10 @@
-<aside class="main-sidebar sidebar-dark-primary bg-navy elevation-4">
+<aside class="main-sidebar sidebar-dark-primary bg-navy elevation-4" xmlns:th="http://www.w3.org/1999/xhtml">
 	<!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         	<div class="image">
-                <img th:src="@{/dist/img/logoP.jpg}" class="img-circle elevation-2" alt="User Image">
+                <img alt="User Image" class="img-circle elevation-2" th:src="@{/dist/img/logoP.jpg}">
             </div>
             <div class="info">
                 <a class="d-block" style="font-family:monaco" href="#">Putri Dwi JS</a>
@@ -16,9 +16,15 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
+                <a class="nav-link" href="/dashboard">
+                    <i class="nav-icon fas fa-home"></i>
+                    <p>
+                        Home
+                    </p>
+                </a>
                 <li class="nav-item has-treeview menu-open">
                     <a class="nav-link" href="#">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-file"></i>
                         <p>
                             Form
                             <i class="right fas fa-angle-left"></i>

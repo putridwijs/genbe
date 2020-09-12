@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = "/")
 public class BaseMvcController {
-//	@GetMapping("dashboard")
-//	public String dashboard() {
-//		return "dashboard/dataperson";
-//	}
-//	
+	@GetMapping("dashboard")
+	public String dashboard() {
+		return "dashboard/dashboard";
+	}
+
 	@GetMapping("datapendidikan")
 	public String person() {
 		return "pendidikan/datapendidikan";
@@ -32,9 +32,11 @@ public class BaseMvcController {
 	public String pendidikan() {
 		return "pendidikan/pendidikan";
 	}
-	
+
 	@GetMapping("getdata")
 	public String get() {
 		return "person/get";
 	}
+
+
 }

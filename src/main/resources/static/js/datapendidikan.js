@@ -36,13 +36,6 @@ var tableBiodata = {
                                 render: function (data, type, row, meta) {
                                     return "<button class='btn-primary' onclick=formBiodata.setEditData('" + meta.row + "')>Edit</button>"
                                 }
-                            },
-                            {
-                                title: "Hapus",
-                                data: null,
-                                render: function (data, type, row, meta) {
-                                    return "<button class='btn-danger' onclick=formBiodata.eraseRow('" + meta.row + "')>Hapus</button>"
-                                }
                             }
                  ]
 			});
@@ -52,6 +45,65 @@ var tableBiodata = {
 			
 		}
 	}
+}
+
+var tablePendidikan = {
+	create: function () {
+		if ($.fn.DataTable.isDataTable('#tableBiodata')) {
+			$('#tablePendidikan').DataTable().clear();
+			$('#tablePendidikan').DataTable().destroy();
+		}
+
+		$.ajax({
+			url: '/api/pendidikan/data',
+			method: 'get',
+			contentType: 'application/json',
+			success: function (res, status, xhr){
+				if (xhr.status == 200 || xhr.status == 201){
+					console.log(res);
+					$('#tableBiodata').DataTable({
+						data: res,
+						columns: [
+							{
+								title: "Id",
+								data: 'idPerson'
+							},
+							{
+								title: "Nama",
+								data: 'nama'
+							},
+							{
+								title: "Jenjang",
+								data: 'jenjang'
+							},
+							{
+								title: "Institusi",
+								data: 'institusi'
+							},
+							{
+								title: "Tahun Masuk",
+								data: 'tahunMasuk'
+							},
+							{
+								title: "Tahun Lulus",
+								data: 'tahunLulus'
+							}
+						]
+					});
+				} else {
+
+				}
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		});
+	},
+	remove: function () {
+		$('#tablePendidikan').DataTable().clear();
+		$('#tablePendidikan').DataTable().destroy();
+	}
+
 }
 var formBiodata = {
 	addData: function (){
@@ -68,6 +120,8 @@ var formBiodata = {
 	},
 	resetform: function () {
         $('#form-biodata')[0].reset();
+		$('#idPerson').val("");
+		$('#idBio').val("");
     },
 	saveForm: function () {
 		console.log(dataPen);
@@ -120,6 +174,7 @@ var formBiodata = {
 		}
 	},
 	setEditData: function (row){
+		formBiodata.resetform();
      	$('#form-biodata').fromJSON(JSON.stringify(dataPen[row]));
      	$('#modal-biodata').modal('show');
      	newrow= row;
