@@ -105,7 +105,7 @@ public class ApiPersonBiodata {
 //		List<Object> object = new ArrayList<>();
 //////		List<PersonBioPendidikanDto> bioPendidikanDtos = pendidikanRepository.findAll();
 ////		List<Pendidikan> list = pendidikanRepository.findAll();
-////		List<Person> person = personRepository.findAll();
+////		List<DataPerson> person = personRepository.findAll();
 ////		List<Object> objects = convertToDToList(list);
 //////		objects.add(list);
 ////		object.add(objects);
@@ -119,7 +119,7 @@ public class ApiPersonBiodata {
 ////		return object;
 //		List<Pendidikan> list = pendidikanRepository.findAll();
 //		
-////		List<Person> person = personRepository.findAll();
+////		List<DataPerson> person = personRepository.findAll();
 //		PersonBioPendidikanDto dto = (PersonBioPendidikanDto) convertToDTo(list);
 //		object.add(dto);
 //		return object;
@@ -131,7 +131,7 @@ public class ApiPersonBiodata {
 	public Response saveBiodata(@RequestBody PersonBiodataDto dto) {
 		Response status = new Response();
 		Biodata biodata = modelMapper.map(dto, Biodata.class);
-//		mapping data PersonBiodataDto ke Person
+//		mapping data PersonBiodataDto ke DataPerson
 		Person person = modelMapper.map(dto, Person.class);
 //		set person
 		biodata.setPerson(person);

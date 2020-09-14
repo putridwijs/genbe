@@ -130,7 +130,7 @@ var formBiodata = {
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
-					text: 'Harap Masukan ID Person'
+					text: 'Harap Masukan ID DataPerson'
 				})
 			} else {
 				$.ajax({

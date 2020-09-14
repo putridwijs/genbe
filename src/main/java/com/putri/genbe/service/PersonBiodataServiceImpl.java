@@ -33,7 +33,7 @@ public class PersonBiodataServiceImpl implements PersonBiodataService {
 	public Biodata saveBiodataToPerson(PersonBiodataDto dto) {
 //		mapping data PersonBiodata ke Biodata
 		Biodata biodata = modelMapper.map(dto, Biodata.class);
-//		mapping data PersonBiodataDto ke Person
+//		mapping data PersonBiodataDto ke DataPerson
 		Person person = modelMapper.map(dto, Person.class);
 //		set person
 		biodata.setPerson(person);
