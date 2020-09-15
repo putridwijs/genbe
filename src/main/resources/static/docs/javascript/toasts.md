@@ -13,7 +13,7 @@ This plugin can be activated as a jQuery plugin.
 The jQuery API provides more customizable options that allows the developer to handle checking and unchecking the todo list checkbox events. 
 ```js
 $(document).Toasts('create', {
-  title: 'Toast Title',
+  title: 'MyToast Title',
   body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
 })
 ```
@@ -68,4 +68,4 @@ Example: `$('body').on('created.lte.toast', handleCreateEvent)`
 |create | Creates a toast
 {: .table .table-bordered .bg-light}
 
-Example: `$(document).Toasts('create', {title: 'Toast Title'})`
+Example: `$(document).Toasts('create', {title: 'MyToast Title'})`

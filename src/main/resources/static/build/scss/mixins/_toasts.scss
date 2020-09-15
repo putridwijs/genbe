@@ -2,7 +2,7 @@
 // Mixins: Toasts
 //
 
-// Toast Variant
+// MyToast Variant
 @mixin toast-variant($name, $color) {
   &.bg-#{$name} {
     background: rgba($color, .9) !important;
